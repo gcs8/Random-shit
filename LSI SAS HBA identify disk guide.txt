@@ -1,0 +1,119 @@
+LSI SAS HBA identify disk guide
+
+#This will show you all the multi paths for SAS is you have it and what disk IDs are tied to what slot
+
+gmultipath status
+
+multipath/disk12  OPTIMAL  da58 (ACTIVE)
+                           da19 (PASSIVE)
+
+#sas2ircu list OR sas3ircu list will show you the controllers in the system
+
+sas3ircu list
+
+Avago Technologies SAS3 IR Configuration Utility.
+Version 16.00.00.00 (2017.04.26)
+Copyright (c) 2009-2017 Avago Technologies. All rights reserved.
+
+
+         Adapter      Vendor  Device                       SubSys  SubSys
+ Index    Type          ID      ID    Pci Address          Ven ID  Dev ID
+ -----  ------------  ------  ------  -----------------    ------  ------
+   0     SAS3008       1000h   97h    00h:83h:00h:00h      1000h   30e0h
+
+         Adapter      Vendor  Device                       SubSys  SubSys
+ Index    Type          ID      ID    Pci Address          Ven ID  Dev ID
+ -----  ------------  ------  ------  -----------------    ------  ------
+   1     SAS3008       1000h   97h    00h:84h:00h:00h      1000h   30e0h
+SAS3IRCU: Utility Completed Successfully.
+
+# sas3ircu 0 display will display the info for controler 0
+
+sas3ircu 0 display
+
+Avago Technologies SAS3 IR Configuration Utility.
+Version 16.00.00.00 (2017.04.26)
+Copyright (c) 2009-2017 Avago Technologies. All rights reserved.
+
+Read configuration has been initiated for controller 0
+------------------------------------------------------------------------
+Controller information
+------------------------------------------------------------------------
+  Controller type                         : SAS3008
+  BIOS version                            : 8.37.00.00
+  Firmware version                        : 16.00.01.00
+  Channel description                     : 1 Serial Attached SCSI
+  Initiator ID                            : 0
+  Maximum physical devices                : 1023
+  Concurrent commands supported           : 9856
+  Slot                                    : 2
+  Segment                                 : 0
+  Bus                                     : 131
+  Device                                  : 0
+  Function                                : 0
+  RAID Support                            : No
+------------------------------------------------------------------------
+IR Volume information
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Physical device information
+------------------------------------------------------------------------
+Initiator at ID #0
+
+Device is a Hard disk
+  Enclosure #                             : 2
+  Slot #                                  : 12
+  SAS Address                             : 5000cca-2-6098-fbb6
+  State                                   : Ready (RDY)
+  Size (in MB)/(in sectors)               : 7630885/15628053167
+  Manufacturer                            : HGST
+  Model Number                            : HUH728080AL5200
+  Firmware Revision                       : A907
+  Serial No                               : V######V
+  Unit Serial No(VPD)                     : V######V
+  GUID                                    : N/A
+  Protocol                                : SAS
+  Drive Type                              : SAS_HDD
+  
+  ------------------------------------------------------------------------
+Enclosure information
+------------------------------------------------------------------------
+  Enclosure#                              : 1
+  Logical ID                              : 500605b0:09156333
+  Numslots                                : 8
+  StartSlot                               : 0
+  Enclosure#                              : 2
+  Logical ID                              : 50030480:090c4f7f
+  Numslots                                : 43
+  StartSlot                               : 0
+  Enclosure#                              : 3
+  Logical ID                              : 50030480:090c4f7f
+  Numslots                                : 43
+  StartSlot                               : 0
+------------------------------------------------------------------------
+SAS3IRCU: Command DISPLAY Completed Successfully.
+SAS3IRCU: Utility Completed Successfully.
+
+# this is how you enable the locate option once you match the disk S/N or SAS address or wowever you make your match
+
+sas3ircu 0 locate 2:12 ON
+
+Avago Technologies SAS3 IR Configuration Utility.
+Version 16.00.00.00 (2017.04.26)
+Copyright (c) 2009-2017 Avago Technologies. All rights reserved.
+
+SAS3IRCU: LOCATE command completed successfully.
+SAS3IRCU: Command LOCATE Completed Successfully.
+SAS3IRCU: Utility Completed Successfully.
+
+#and turn it off
+
+sas3ircu 0 locate 2:12 off
+
+Avago Technologies SAS3 IR Configuration Utility.
+Version 16.00.00.00 (2017.04.26)
+Copyright (c) 2009-2017 Avago Technologies. All rights reserved.
+
+SAS3IRCU: LOCATE command completed successfully.
+SAS3IRCU: Command LOCATE Completed Successfully.
+SAS3IRCU: Utility Completed Successfully.
